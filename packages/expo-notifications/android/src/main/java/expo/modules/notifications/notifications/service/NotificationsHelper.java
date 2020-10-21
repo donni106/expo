@@ -16,6 +16,7 @@ import expo.modules.notifications.notifications.model.NotificationBehavior;
 import expo.modules.notifications.notifications.model.NotificationCategory;
 import expo.modules.notifications.notifications.model.NotificationResponse;
 import expo.modules.notifications.service.NotificationsService;
+import expo.modules.notifications.service.delegates.SharedPreferencesNotificationCategoriesStore;
 
 /**
  * A notification service foundation handling incoming intents

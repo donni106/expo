@@ -15,7 +15,7 @@ import expo.modules.notifications.notifications.model.NotificationAction;
 import expo.modules.notifications.notifications.model.NotificationCategory;
 import expo.modules.notifications.notifications.model.NotificationContent;
 import expo.modules.notifications.notifications.model.TextInputNotificationAction;
-import expo.modules.notifications.notifications.service.SharedPreferencesNotificationCategoriesStore;
+import expo.modules.notifications.service.delegates.SharedPreferencesNotificationCategoriesStore;
 import expo.modules.notifications.notifications.service.TextInputNotificationResponseReceiver;
 
 import static expo.modules.notifications.notifications.service.TextInputNotificationResponseReceiver.getActionIntent;
