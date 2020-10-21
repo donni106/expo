@@ -1,9 +1,9 @@
 import { Subscription } from '@unimodules/core';
+import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import React from 'react';
 import { Alert, Platform, ScrollView } from 'react-native';
-import Constants from 'expo-constants';
 
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import HeadingText from '../components/HeadingText';
