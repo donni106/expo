@@ -272,6 +272,17 @@ export class Package {
     // TODO(tsapeta): Support ios and web.
     throw new Error(`"hasNativeTestsAsync" for platform "${platform}" is not implemented yet.`);
   }
+
+  /**
+   * Checks whether package contains some native tests for Android.
+   */
+  async hasNativeInstrumentationTestsAsync(platform: Platform): Promise<boolean> {
+    if (platform === 'android') {
+      return fs.pathExists(path.join(this.path, this.androidSubdirectory, 'src/androidTest'));
+    }
+    // TODO(tsapeta): Support ios and web.
+    throw new Error(`"hasNativeTestsAsync" for platform "${platform}" is not implemented yet.`);
+  }
 }
 
 /**

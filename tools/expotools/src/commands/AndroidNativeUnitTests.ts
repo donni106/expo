@@ -15,7 +15,7 @@ const excludedInTests = [
   'unimodules-test-core',
 ];
 
-export async function androidNativeUnitTests() {
+export async function androidNativeUnitTests({ instrumentation }: { instrumentation: boolean }) {
   const packages = await Packages.getListOfPackagesAsync();
 
   function consoleErrorOutput(
@@ -30,11 +30,19 @@ export async function androidNativeUnitTests() {
   const androidPackages = await filterAsync(packages, async (pkg) => {
     const pkgSlug = pkg.packageSlug;
 
-    return (
-      pkg.isSupportedOnPlatform('android') &&
-      (await pkg.hasNativeTestsAsync('android')) &&
-      !excludedInTests.includes(pkgSlug)
-    );
+    if (instrumentation) {
+      return (
+        pkg.isSupportedOnPlatform('android') &&
+        (await pkg.hasNativeInstrumentationTestsAsync('android')) &&
+        !excludedInTests.includes(pkgSlug)
+      );
+    } else {
+      return (
+        pkg.isSupportedOnPlatform('android') &&
+        (await pkg.hasNativeTestsAsync('android')) &&
+        !excludedInTests.includes(pkgSlug)
+      );
+    }
   });
 
   console.log(chalk.green('Packages to test: '));
@@ -42,10 +50,11 @@ export async function androidNativeUnitTests() {
     console.log(chalk.yellow(pkg.packageSlug));
   });
 
+  const testCommand = instrumentation ? 'connectedAndroidTest' : 'test';
   try {
     await spawnAsync(
       './gradlew',
-      androidPackages.map((pkg) => `:${pkg.packageSlug}:test`),
+      androidPackages.map((pkg) => `:${pkg.packageSlug}:${testCommand}`),
       {
         cwd: ANDROID_DIR,
         stdio: 'inherit',
@@ -65,6 +74,7 @@ export async function androidNativeUnitTests() {
 export default (program: any) => {
   program
     .command('android-native-unit-tests')
+    .option('-i, --instrumentation', 'Run instrumentation tests', false)
     .description('Runs Android native unit tests for each package that provides them.')
     .asyncAction(androidNativeUnitTests);
 };

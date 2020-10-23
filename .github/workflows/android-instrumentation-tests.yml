@@ -34,5 +34,4 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew :expo-updates:connectedAndroidTest
-          working-directory: ./android
+          script: expotools android-native-unit-tests --instrumentation
